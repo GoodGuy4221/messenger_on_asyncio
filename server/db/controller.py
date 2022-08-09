@@ -11,7 +11,7 @@ class ClientMessages:
         self.dal.connect()
         self.dal.session = self.dal.Session()
 
-    def add_client(self, username, password, info=None):
+    def add_client(self, username: str, password: bytes, info: str | None = None) -> str | bool:
         """add client"""
         if self.get_client_by_username(username):
             return f'Пользователь {username} уже существует'
@@ -21,14 +21,14 @@ class ClientMessages:
             self.dal.session.commit()
             print(f'Добавлен пользователь: {new_user}')
 
-    def get_client_by_username(self, username: str):
+    def get_client_by_username(self, username: str) -> ClientModel | None:
         """Getting client by name"""
         client = self.dal.session.query(ClientModel).filter(
             ClientModel.username == username
         ).first()
         return client
 
-    def add_client_history(self, client_username, ip_addr='1.1.1.1'):
+    def add_client_history(self, client_username: str, ip_addr: str = '1.1.1.1') -> None | str:
         """Added history client"""
         client = self.get_client_by_username(client_username)
         if client:
@@ -43,7 +43,7 @@ class ClientMessages:
 
         return f'Пользователь :{client_username} не существует'
 
-    def set_user_online(self, client_username):
+    def set_user_online(self, client_username: str) -> None | str:
         client = self.get_client_by_username(client_username)
         if client:
             client.online_status = True
