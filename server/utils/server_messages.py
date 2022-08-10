@@ -16,7 +16,7 @@ class JimServerMessage:
         return data
 
     @staticmethod
-    def response(code: int | None = None, error: int | None = None) -> dict:
+    def response(code: int | None = None, error: str | None = None) -> dict:
         data = {
             'action': 'response',
             'code': code,
